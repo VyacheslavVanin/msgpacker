@@ -8,5 +8,7 @@ CONFIG -= qt
 INCLUDEPATH += .
 
 # Input
-HEADERS += packer.h
-SOURCES += main.c packer.c
+HEADERS += \
+    baseencode.h
+SOURCES += main.c \
+    baseencode.c

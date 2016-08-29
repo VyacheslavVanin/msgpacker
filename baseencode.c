@@ -1,4 +1,4 @@
-#include "packer.h"
+#include "baseencode.h"
 #include <arpa/inet.h>
 #include <string.h>
 #include <assert.h>
@@ -41,42 +41,42 @@ static uint64_t htonll(uint64_t src)
 }
 
 
-uint16_t ntoh16_p(const void* src)
+static uint16_t ntoh16_p(const void* src)
 {
     uint16_t tmp;
     memcpy(&tmp,src,sizeof(tmp));
     return ntohs(tmp);
 }
 
-uint32_t ntoh32_p(const void* p)
+static uint32_t ntoh32_p(const void* p)
 {
     uint32_t tmp;
     memcpy(&tmp,p,sizeof(tmp));
     return ntohl(tmp);
 }
 
-uint64_t ntoh64_p(const void* p)
+static uint64_t ntoh64_p(const void* p)
 {
     uint64_t tmp;
     memcpy(&tmp,p,sizeof(tmp));
     return ntohll(tmp);
 }
 
-uint16_t hton16_p(const void* p)
+static uint16_t hton16_p(const void* p)
 {
     uint16_t tmp;
     memcpy(&tmp,p,sizeof(tmp));
     return htons(tmp);
 }
 
-uint32_t hton32_p(const void* p)
+static uint32_t hton32_p(const void* p)
 {
     uint32_t tmp;
     memcpy(&tmp,p,sizeof(tmp));
     return htonl(tmp);
 }
 
-uint64_t hton64_p(const void* p)
+static uint64_t hton64_p(const void* p)
 {
     uint64_t tmp;
     memcpy(&tmp,p,sizeof(tmp));
