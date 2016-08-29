@@ -1,12 +1,17 @@
-#include "baseencode.h"
-#include <arpa/inet.h>
-#include <string.h>
-#include <assert.h>
-
-#if defined(__sparc__) || defined(__v8__) || defined(__v9__)
-#define HOST_ENDIANESS_BIG
+#ifdef __WIN32
+#include <winsock2.h>
 #else
-#define HOST_ENDIANESS_LITTLE
+#include <arpa/inet.h>
+#endif
+#include "baseencode.h"
+#include <string.h>
+
+#if !defined(HOST_ENDIANESS_LITTLE) && !defined(HOST_ENDIANESS_BIG)
+    #if defined(__sparc__) || defined(__sparc_v8__) || defined(__sparc_v9__)
+        #define HOST_ENDIANESS_BIG
+    #else
+        #define HOST_ENDIANESS_LITTLE
+    #endif
 #endif
 
 
