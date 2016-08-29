@@ -41,187 +41,105 @@ static uint64_t htonll(uint64_t src)
 }
 
 
-uint16_t ntoh16_p(void* p)
+uint16_t ntoh16_p(const void* src)
 {
     uint16_t tmp;
-    memcpy(&tmp,p,sizeof(tmp));
+    memcpy(&tmp,src,sizeof(tmp));
     return ntohs(tmp);
 }
 
-uint32_t ntoh32_p(void* p)
+uint32_t ntoh32_p(const void* p)
 {
     uint32_t tmp;
     memcpy(&tmp,p,sizeof(tmp));
     return ntohl(tmp);
 }
-uint64_t ntoh64_p(void* p)
+
+uint64_t ntoh64_p(const void* p)
 {
     uint64_t tmp;
     memcpy(&tmp,p,sizeof(tmp));
     return ntohll(tmp);
 }
 
-uint16_t hton16_p(void* p)
+uint16_t hton16_p(const void* p)
 {
     uint16_t tmp;
     memcpy(&tmp,p,sizeof(tmp));
     return htons(tmp);
 }
-uint32_t hton32_p(void* p)
+
+uint32_t hton32_p(const void* p)
 {
     uint32_t tmp;
     memcpy(&tmp,p,sizeof(tmp));
-    return htons(tmp);
+    return htonl(tmp);
 }
-uint64_t hton64_p(void* p)
+
+uint64_t hton64_p(const void* p)
 {
     uint64_t tmp;
     memcpy(&tmp,p,sizeof(tmp));
-    return htons(tmp);
+    return htonll(tmp);
 }
 
 
-int packer_init(packer_t* p, void* base, size_t max_size)
+void* encode_8(const void* src, void* dest)
 {
-    p->base = (uint8_t*)base;
-    p->current_pos = 0;
-    p->max_size = max_size;
-    return 0;
+     *(uint8_t*)dest = *(uint8_t*)src;
+     return (uint8_t*)dest+1;
 }
 
-int packer_put8(packer_t* p, uint8_t v)
+void* encode_16(const void* src, void* dest)
 {
-    const size_t valueSize = sizeof(v);
-    const size_t current_pos = p->current_pos;
-    const size_t newPos = p->current_pos + valueSize;
-    if(newPos > p->max_size) return -1;
-    memcpy(p->base+current_pos, &v, valueSize);
-    p->current_pos = newPos;
-    return 0;
-}
-
-int packer_put16(packer_t* p, uint16_t v)
-{
-    const size_t valueSize = sizeof(v);
-    const size_t current_pos = p->current_pos;
-    const size_t newPos = p->current_pos + valueSize;
-    if(newPos > p->max_size) {
-        return -1;
-    }
-    else{
-        const uint16_t value = htons(v); 
-        memcpy(p->base+current_pos, &value, valueSize);
-        p->current_pos = newPos;
-    }
-    return 0;
-}
-
-int packer_put32(packer_t* p, uint32_t v)
-{
-    const size_t valueSize = sizeof(v);
-    const size_t current_pos = p->current_pos;
-    const size_t newPos = p->current_pos + valueSize;
-    if(newPos > p->max_size) {
-        return -1;
-    }
-    else{
-        const uint32_t value = htonl(v); 
-        memcpy(p->base+current_pos, &value, valueSize);
-        p->current_pos = newPos;
-    }
-    return 0;
-}
-int packer_put64(packer_t* p, uint64_t v)
-{
-    const size_t valueSize = sizeof(v);
-    const size_t current_pos = p->current_pos;
-    const size_t newPos = p->current_pos + valueSize;
-    if(newPos > p->max_size) {
-        return -1;
-    }
-    else{
-        const uint64_t value = htonll(v); 
-        memcpy(p->base+current_pos, &value, valueSize);
-        p->current_pos = newPos;
-    }
-    return 0;
+    const uint16_t n = hton16_p(src);
+    memcpy(dest, &n, sizeof(n));
+    return (uint8_t*)dest + sizeof(n);
 }
 
 
-
-int unpacker_init(unpacker_t* p, void* base, size_t max_size)
+void* encode_32(const void* src, void* dest)
 {
-    p->base = (uint8_t*)base;
-    p->current_pos = 0;
-    p->max_size = max_size;
-    return 0;
+    const uint32_t n = hton32_p(src);
+    memcpy(dest, &n, sizeof(n));
+    return (uint8_t*)dest + sizeof(n);
 }
 
-int unpacker_get8(unpacker_t* p, uint8_t* out)
+
+void* encode_64(const void* src, void* dest)
 {
-    const size_t curpos = p->current_pos;
-    const size_t newPos = curpos + 1;
-    if(newPos > p->max_size) {
-        assert(0 && "buffer overflow");
-        return -1;
-    }
-    else{
-        *out = p->base[curpos];
-        p->current_pos = newPos;
-        return 0;
-    }
+    const uint64_t n = hton64_p(src);
+    memcpy(dest, &n, sizeof(n));
+    return (uint8_t*)dest + sizeof(n);
 }
 
-int unpacker_get16(unpacker_t* p, uint16_t* out)
+
+const void* decode_8(const void* src, void* dest)
 {
-    const size_t valueSize = 2;
-    const size_t curpos = p->current_pos;
-    const size_t newPos = curpos + valueSize;
-    if(newPos > p->max_size) {
-        assert(0 && "buffer overflow");
-        return -1;
-    }
-    else{
-        uint16_t tmp;
-        memcpy(&tmp, &p->base[curpos], valueSize);
-        *out = ntohs(tmp);
-        p->current_pos = newPos;
-        return 0;
-    }
+     *(uint8_t*)dest = *(uint8_t*)src;
+     return (uint8_t*)src + 1;
 }
 
-int unpacker_get32(unpacker_t* p, uint32_t* out)
+
+const void* decode_16(const void* src, void* dest)
 {
-    const size_t valueSize = 4;
-    const size_t curpos = p->current_pos;
-    const size_t newPos = curpos + valueSize;
-    if(newPos > p->max_size) {
-        assert(0 && "buffer overflow");
-        return -1;
-    }
-    else{
-        uint32_t tmp;
-        memcpy(&tmp, &p->base[curpos], valueSize);
-        *out = ntohl(tmp);
-        p->current_pos = newPos;
-        return 0;
-    }
+    const uint16_t n = ntoh16_p(src);
+    memcpy(dest, &n, sizeof(n));
+    return (uint8_t*)src + sizeof(n);
 }
 
-int unpacker_get64(unpacker_t* p, uint64_t* out)
+
+const void* decode_32(const void* src, void* dest)
 {
-    const size_t valueSize = 8;
-    const size_t curpos = p->current_pos;
-    const size_t newPos = curpos + valueSize;
-    if(newPos > p->max_size) {
-        assert(0 && "buffer overflow");
-        return -1;
-    }
-    else{
-        uint64_t tmp;
-        memcpy(&tmp, &p->base[curpos], valueSize);
-        *out = ntohll(tmp);
-        p->current_pos = newPos;
-        return 0;
-    }
+    const uint32_t n = ntoh32_p(src);
+    memcpy(dest, &n, sizeof(n));
+    return (uint8_t*)src + sizeof(n);
+}
+
+
+const void* decode_64(const void* src, void* dest)
+{
+    const uint64_t n = ntoh64_p(src);
+    memcpy(dest, &n, sizeof(n));
+    return (uint8_t*)src + sizeof(n);
 }
