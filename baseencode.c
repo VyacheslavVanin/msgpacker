@@ -14,12 +14,8 @@
     #endif
 #endif
 
-
-static uint64_t ntohll(uint64_t src)
+static uint64_t swap_bytes(uint64_t src)
 {
-#ifdef HOST_ENDIANESS_BIG
-    return src;
-#else
     uint8_t  t; 
     uint8_t* p = (uint8_t*)&src;
     t = p[0]; p[0] = p[7]; p[7] = t;
@@ -27,6 +23,14 @@ static uint64_t ntohll(uint64_t src)
     t = p[2]; p[2] = p[5]; p[5] = t;
     t = p[3]; p[3] = p[4]; p[4] = t;
     return src;
+}
+
+static uint64_t ntohll(uint64_t src)
+{
+#ifdef HOST_ENDIANESS_BIG
+    return src;
+#else
+    return swap_bytes(src);
 #endif
 }
 
@@ -35,13 +39,7 @@ static uint64_t htonll(uint64_t src)
 #ifdef HOST_ENDIANESS_BIG
     return src;
 #else
-    uint8_t  t; 
-    uint8_t* p = (uint8_t*)&src;
-    t = p[0]; p[0] = p[7]; p[7] = t;
-    t = p[1]; p[1] = p[6]; p[6] = t;
-    t = p[2]; p[2] = p[5]; p[5] = t;
-    t = p[3]; p[3] = p[4]; p[4] = t;
-    return src;
+    return swap_bytes(src);
 #endif
 }
 
