@@ -11,6 +11,11 @@
  *      uint32_t l;
  *  };
  *
+ *  struct bar {
+ *      uint16_t s;
+ *      foo      f;
+ *  };
+ *
  *  void* encode_foo(const foo* f, void* dst)
  *  {
  *      dst = encode_16(&f->s, dst);
@@ -24,6 +29,20 @@
  *      src = decode_16(src, &f->s);
  *      src = decode_64(src, &f->d);
  *      src = decode_32(src, &f->l);
+ *      return src;
+ *  }
+ *  
+ *  void* encode_bar(const bar* b, void* dst)
+ *  {
+ *      dst = encode_16(&b->s, dst);
+ *      dst = encode_foo(&b->foo, dst);
+ *      return dst;
+ *  }
+ *
+ *  const void* decode_bar(const void* src, bar* b)
+ *  {
+ *      src = decode_16(src, &b->s);
+ *      src = decode_foo(src, &b->f);
  *      return src;
  *  }
  */
