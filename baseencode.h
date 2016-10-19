@@ -1,7 +1,7 @@
 #ifndef BASEENCODE_H
 #define BASEENCODE_H
 #include <stdlib.h>
-#include <inttypes.h>
+#include <stdint.h>
 
 /*
  *  // Example:
