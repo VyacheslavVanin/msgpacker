@@ -3,3 +3,5 @@
 Makefile
 msgpacker
 *.swp
+.qmake.stash
+*.pro.user.*
