@@ -35,7 +35,7 @@
  *  void* encode_bar(const bar* b, void* dst)
  *  {
  *      dst = encode_16(&b->s, dst);
- *      dst = encode_foo(&b->foo, dst);
+ *      dst = encode_foo(&b->f, dst);
  *      return dst;
  *  }
  *
