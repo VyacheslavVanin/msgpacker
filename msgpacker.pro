@@ -9,6 +9,8 @@ INCLUDEPATH += .
 
 # Input
 HEADERS += \
-    baseencode.h
-SOURCES += main.c \
+    baseencode.h \
+    vvvtest.h
+SOURCES += main.cpp \
+    vvvtest.cpp \
     baseencode.c
