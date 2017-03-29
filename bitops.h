@@ -35,8 +35,8 @@ inline uint##bits##_t mid_mask##bits(uint32_t offset, uint32_t width) \
 
 // https://graphics.stanford.edu/~seander/bithacks.html#MaskedMerge
 // a^((a^b)&mask) = (a & ~mask) | (b & mask) 
-#define __set_mid_bitsN(bits) \
-inline uint##bits##_t set_mid_bits##bits(uint##bits##_t in, \
+#define __set_bitsN(bits) \
+inline uint##bits##_t set_bits##bits(uint##bits##_t in, \
                         uint32_t offset, uint32_t width, \
                         uint##bits##_t value) \
 { \
@@ -62,7 +62,7 @@ __define_for_all_bitsizes(__is_bit_setN)
 __define_for_all_bitsizes(__high_maskN)
 __define_for_all_bitsizes(__low_maskN)
 __define_for_all_bitsizes(__mid_maskN)
-__define_for_all_bitsizes(__set_mid_bitsN)
+__define_for_all_bitsizes(__set_bitsN)
 __define_for_all_bitsizes(__get_mid_bitsN)
 
 void print_bytes_bits(const void* src, uint32_t numbytes);
