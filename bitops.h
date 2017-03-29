@@ -71,12 +71,6 @@ void print_bits16(uint16_t value);
 void print_bits32(uint32_t value);
 void print_bits64(uint32_t value);
 
-uint32_t ptou32(const void* ptr);
-void u32top(void* ptr, uint32_t val);
-void write_bits32(void* ptr, uint32_t bits_offset, uint32_t width,
-                  uint32_t value);
-uint32_t read_bits32(void* ptr, uint32_t offset, uint32_t width);
-
 
 #ifdef __cplusplus
 }
