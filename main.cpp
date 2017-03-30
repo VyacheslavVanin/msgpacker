@@ -30,11 +30,11 @@ VVVTEST_EQ(test_set_bits4, set_bits32(0x12345678, 12, 16, 0xabcd) == 0x1abcd678)
 VVVTEST_EQ(test_set_bits5, set_bits32(0x12345678, 16, 16, 0xabcd) == 0xabcd5678)
 VVVTEST_EQ(test_set_bits6, set_bits32(0x12345678, 20, 16, 0xabcd) == 0xbcd45678)
 
-VVVTEST_EQ(test_get_mid_bits0, get_mid_bits32(0x12345678, 0,  8) == 0x78)
-VVVTEST_EQ(test_get_mid_bits1, get_mid_bits32(0x12345678, 0, 16) == 0x5678)
-VVVTEST_EQ(test_get_mid_bits2, get_mid_bits32(0x12345678, 4,  8) == 0x67)
-VVVTEST_EQ(test_get_mid_bits3, get_mid_bits32(0x12345678, 28, 4) == 0x1)
-VVVTEST_EQ(test_get_mid_bits4, get_mid_bits32(0x12345678, 24, 8) == 0x12)
+VVVTEST_EQ(test_get_bits0, get_bits32(0x12345678, 0,  8) == 0x78)
+VVVTEST_EQ(test_get_bits1, get_bits32(0x12345678, 0, 16) == 0x5678)
+VVVTEST_EQ(test_get_bits2, get_bits32(0x12345678, 4,  8) == 0x67)
+VVVTEST_EQ(test_get_bits3, get_bits32(0x12345678, 28, 4) == 0x1)
+VVVTEST_EQ(test_get_bits4, get_bits32(0x12345678, 24, 8) == 0x12)
 
 int main()
 {

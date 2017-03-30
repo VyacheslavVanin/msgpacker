@@ -45,8 +45,8 @@ inline uint##bits##_t set_bits##bits(uint##bits##_t in, \
     return in ^((in^shifted_val)&mask); \
 }
 
-#define __get_mid_bitsN(bits) \
-inline uint##bits##_t get_mid_bits##bits(uint##bits##_t in, \
+#define __get_bitsN(bits) \
+inline uint##bits##_t get_bits##bits(uint##bits##_t in, \
                                   uint32_t offset, uint32_t width) \
 { \
     return (in << ((bits) - (offset + width))) >> ((bits) - width); \
@@ -63,7 +63,7 @@ __define_for_all_bitsizes(__high_maskN)
 __define_for_all_bitsizes(__low_maskN)
 __define_for_all_bitsizes(__mid_maskN)
 __define_for_all_bitsizes(__set_bitsN)
-__define_for_all_bitsizes(__get_mid_bitsN)
+__define_for_all_bitsizes(__get_bitsN)
 
 void print_bytes_bits(const void* src, uint32_t numbytes);
 void print_bits8(uint8_t value);
