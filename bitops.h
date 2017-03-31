@@ -15,22 +15,19 @@ inline int is_bit_set##bits(uint##bits##_t value, uint32_t bit) \
 #define __high_maskN(bits) \
 inline uint32_t high_mask##bits(uint32_t numbits) \
 { \
-    return numbits ? UINT##bits##_MAX << ((bits) - numbits) \
-                   : 0; \
+    return UINT##bits##_MAX << ((bits) - numbits); \
 }
 
 #define __low_maskN(bits) \
 inline uint##bits##_t low_mask##bits(uint32_t numbits) \
 { \
-    return numbits ? UINT##bits##_MAX >> ((bits) - numbits) \
-                   : 0; \
+    return UINT##bits##_MAX >> ((bits) - numbits); \
 }
 
 #define __mid_maskN(bits) \
 inline uint##bits##_t mid_mask##bits(uint32_t offset, uint32_t width) \
 { \
-    return width ? (UINT##bits##_MAX >> ((bits) - width))<< offset \
-                 : 0; \
+    return (UINT##bits##_MAX >> ((bits) - width))<< offset; \
 }
 
 // https://graphics.stanford.edu/~seander/bithacks.html#MaskedMerge
