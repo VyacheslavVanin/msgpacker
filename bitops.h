@@ -46,7 +46,7 @@ inline uint##bits##_t set_bits##bits(uint##bits##_t in, \
 inline uint##bits##_t get_bits##bits(uint##bits##_t in, \
                                   uint32_t offset, uint32_t width) \
 { \
-    return (in << ((bits) - (offset + width))) >> ((bits) - width); \
+    return (in & low_mask##bits(offset + width)) >> offset; \
 }
 
 #define __define_for_all_bitsizes(d) \

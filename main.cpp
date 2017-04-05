@@ -36,6 +36,12 @@ VVVTEST_EQ(test_get_bits2, get_bits32(0x12345678, 4,  8) == 0x67)
 VVVTEST_EQ(test_get_bits3, get_bits32(0x12345678, 28, 4) == 0x1)
 VVVTEST_EQ(test_get_bits4, get_bits32(0x12345678, 24, 8) == 0x12)
 
+VVVTEST_EQ(test_get_bits8, get_bits8(0xa8, 0, 4) == 0x8)
+VVVTEST_EQ(test_get_bits9, get_bits8(0xa8, 4, 4) == 0xa)
+VVVTEST_EQ(test_get_bits10, get_bits32(0x12345678, 0,  4) == 0x8)
+VVVTEST_EQ(test_get_bits11, get_bits32(0x12345678, 24,  8) == 0x12)
+VVVTEST_EQ(test_get_bits12, get_bits32(0x26a0b8d7, 24, 8) == 0x26)
+
 int main()
 {
     testall();
