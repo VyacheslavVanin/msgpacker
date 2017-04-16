@@ -41,6 +41,9 @@ VVVTEST_EQ(test_get_bits9, get_bits8(0xa8, 4, 4) == 0xa)
 VVVTEST_EQ(test_get_bits10, get_bits32(0x12345678, 0,  4) == 0x8)
 VVVTEST_EQ(test_get_bits11, get_bits32(0x12345678, 24,  8) == 0x12)
 VVVTEST_EQ(test_get_bits12, get_bits32(0x26a0b8d7, 24, 8) == 0x26)
+VVVTEST_EQ(test64_1, is_bit_set64(0x00000000ffffffffUll, 0) == 1)
+VVVTEST_EQ(test64_2, is_bit_set64(0x00000000ffffffffUll, 63) == 0)
+VVVTEST_EQ(test64_3, is_bit_set64(0xffffffff00000000Ull, 63) == 1)
 
 int main()
 {

@@ -9,7 +9,7 @@ extern "C" {
 #define __is_bit_setN(bits) \
 inline int is_bit_set##bits(uint##bits##_t value, uint32_t bit) \
 { \
-    return ((1 << bit) & value) != 0; \
+    return ((((uint##bits##_t)1) << bit) & value) != 0; \
 }
 
 #define __high_maskN(bits) \
