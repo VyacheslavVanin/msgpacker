@@ -19,9 +19,9 @@ class __test_register
 }
 
 
-#define PASTER(x, y) x##y
-#define EVALUATOR(x, y) PASTER(x, y)
-#define VVVTEST_EQ_(name, expr) \
+#define __PASTER(x, y) x##y
+#define __EVALUATOR(x, y) __PASTER(x, y)
+#define __VVVTEST_EQ(name, expr) \
 namespace { \
 int name() \
 {\
@@ -30,13 +30,13 @@ int name() \
     else       {printf("failed.\n"); return -1;} \
 } \
 \
-__test_private::__test_register EVALUATOR(name,object) = \
+__test_private::__test_register __EVALUATOR(name,object) = \
                         __test_private::__test_register(name); \
 \
 }
-#define NAME(x) EVALUATOR(x, __LINE__)
-#define NAME_(expr) VVVTEST_EQ_(NAME(__vvvtest_), expr)
-#define VVVTEST_EQ(expr) NAME_(expr)
+#define __NAME(x) __EVALUATOR(x, __LINE__)
+#define __NAME_(expr) __VVVTEST_EQ(__NAME(__vvvtest_), expr)
+#define VVVTEST_EQ(expr) __NAME_(expr)
 
 
 
