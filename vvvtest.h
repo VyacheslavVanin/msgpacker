@@ -3,42 +3,44 @@
 #include <vector>
 #include <stdlib.h>
 
-bool testall();
-
-
-
-typedef int (*test_func_t)();
-
-namespace __test_private {
-
-class __test_register
-{
-    public:
-        __test_register(test_func_t func);
+struct __TesterBase {
+    __TesterBase(std::vector<const __TesterBase*>& tests) {
+        tests.push_back(this);
+    }
+    virtual int test() const = 0;
+    virtual ~__TesterBase() {};
 };
-}
 
+bool testall(const std::vector<const __TesterBase*>&);
+
+namespace {
+    std::vector<const __TesterBase*> tests;
+
+    template <int N>
+    struct __Tester;
+
+    inline bool testall() {
+        return testall(tests);
+    }
+}
 
 #define __PASTER(x, y) x##y
 #define __EVALUATOR(x, y) __PASTER(x, y)
-#define __VVVTEST_EQ(name, expr) \
+
+#define __VVVTEST_EQ(line, expr) \
 namespace { \
-int name() \
-{\
-    printf("test: " #expr " ... ");\
-    if((expr)) {printf("passed.\n"); return  0;} \
-    else       {printf("failed.\n"); return -1;} \
-} \
-\
-__test_private::__test_register __EVALUATOR(name,object) = \
-                        __test_private::__test_register(name); \
-\
+template <> struct __Tester<line> : __TesterBase { \
+    __Tester(std::vector<const __TesterBase*>& tests) : __TesterBase(tests) {} \
+    int test() const { \
+        printf("test: " #expr " ... "); \
+        if((expr)) {printf("passed.\n"); return  0;} \
+        else       {printf("failed.\n"); return -1;} \
+    } \
+}; \
+__Tester<line> __EVALUATOR(__vvvtest_,line) (tests); \
 }
-#define __NAME(x) __EVALUATOR(x, __LINE__)
-#define __NAME_(expr) __VVVTEST_EQ(__NAME(__vvvtest_), expr)
-#define VVVTEST_EQ(expr) __NAME_(expr)
 
-
+#define VVVTEST_EQ(expr) __VVVTEST_EQ(__LINE__,expr)
 
 #endif
 

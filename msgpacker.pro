@@ -9,3 +9,5 @@ INCLUDEPATH += .
 # Input
 HEADERS += baseencode.h bitops.h vvvtest.h
 SOURCES += baseencode.c bitops.c main.cpp vvvtest.cpp
+
+QMAKE_CFLAGS += -std=c99
