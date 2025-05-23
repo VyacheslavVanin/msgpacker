@@ -1,6 +1,6 @@
-#include <stdio.h>
 #include "baseencode.h"
 #include <string.h>
+#include <stdio.h>
 #include <arpa/inet.h>
 #include "bitops.h"
 #include "vvvtest.h"

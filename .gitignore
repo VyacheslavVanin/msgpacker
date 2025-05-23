@@ -1,7 +1,4 @@
-*.o
-*.pro.user
-Makefile
-msgpacker
 *.swp
-.qmake.stash
-*.pro.user.*
+.cache
+build
+compile_commands.json
