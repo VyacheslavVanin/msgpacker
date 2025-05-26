@@ -146,3 +146,37 @@ const void* decode_64(const void* src, void* dest)
     memcpy(dest, &n, sizeof(n));
     return (uint8_t*)src + sizeof(n);
 }
+
+char* cencode_8(const void* src, char* dst)
+{
+    return (char*)encode_8(src, dst);
+}
+char* cencode_16(const void* src, char* dst)
+{
+    return (char*)encode_16(src, dst);
+}
+char* cencode_32(const void* src, char* dst)
+{
+    return (char*)encode_32(src, dst);
+}
+char* cencode_64(const void* src, char* dst)
+{
+    return (char*)encode_32(src, dst);
+}
+
+const char* cdecode_8(const char* src, void* dst)
+{
+    return (char*)decode_8(src, dst);
+}
+const char* cdecode_16(const char* src, void* dst)
+{
+    return (char*)decode_16(src, dst);
+}
+const char* cdecode_32(const char* src, void* dst)
+{
+    return (char*)decode_32(src, dst);
+}
+const char* cdecode_64(const char* src, void* dst)
+{
+    return (char*)decode_32(src, dst);
+}

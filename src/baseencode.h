@@ -108,6 +108,16 @@ const void* decode_32(const void* src, void* dest);
  * @return  next source pos (src+8) */
 const void* decode_64(const void* src, void* dest);
 
+char* cencode_8(const void* src, char* dst);
+char* cencode_16(const void* src, char* dst);
+char* cencode_32(const void* src, char* dst);
+char* cencode_64(const void* src, char* dst);
+
+const char* cdecode_8(const char* src, void* dst);
+const char* cdecode_16(const char* src, void* dst);
+const char* cdecode_32(const char* src, void* dst);
+const char* cdecode_64(const char* src, void* dst);
+
 #ifdef __cplusplus
 }
 #endif
