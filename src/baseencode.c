@@ -161,7 +161,7 @@ char* cencode_32(const void* src, char* dst)
 }
 char* cencode_64(const void* src, char* dst)
 {
-    return (char*)encode_32(src, dst);
+    return (char*)encode_64(src, dst);
 }
 
 const char* cdecode_8(const char* src, void* dst)
@@ -178,5 +178,5 @@ const char* cdecode_32(const char* src, void* dst)
 }
 const char* cdecode_64(const char* src, void* dst)
 {
-    return (char*)decode_32(src, dst);
+    return (char*)decode_64(src, dst);
 }
